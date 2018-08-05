@@ -1,0 +1,25 @@
+{
+  "name": "first-nuxt-app",
+  "version": "1.0.0",
+  "description": "My fabulous Nuxt.js project",
+  "author": "Sahil Mobaidin",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
+    "precommit": "npm run lint"
+  },
+  "dependencies": {
+    "nuxt": "^1.0.0"
+  },
+  "devDependencies": {
+    "cross-env": "^5.0.1",
+    "babel-eslint": "^8.2.1",
+    "eslint": "^5.0.1",
+    "eslint-loader": "^2.0.0",
+    "eslint-plugin-vue": "^4.0.0"
+  }
+}
