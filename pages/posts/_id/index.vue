@@ -1,18 +1,41 @@
 <template>
   <div class="single-post-page">
     <section class="post">
-      <h1 class="post-title">Title</h1>
+      <h1 class="post-title">{{loadedPost.title}}</h1>
       <div class="post-details">
-        <div class="post-detail">Last updated on</div>
-        <div class="post-detail">Written by</div>
+        <div class="post-detail">Last updated on {{loadedPost.updateDate}}</div>
+        <div class="post-detail">Written by {{loadedPostauthor}}</div>
       </div>
-      <p class="post-content">content</p>
+      <p class="post-content">{{loadedPost.content}}</p>
     </section>
     <section class="post-feedback">
       <p>Let me know what think about this post.</p>
     </section>
   </div>
 </template>
+
+<script>
+export default {
+  asyncData(context, callback) {
+    setTimeout(() => {
+      callback(null, {
+        loadedPost: {
+          id: "1",
+          title: "First Post (ID:" + context.params.id + ")",
+          previewText: "This is our first post",
+          author: "Sahil",
+          updatedDate: new Date(),
+          content: "Dummy text",
+          thumbnail:
+            "https://cdn.pixabay.com/photo/2015/09/17/17/25/code-944499_1280.jpg"
+        }
+      });
+    }, 1000);
+  }
+};
+</script>
+
+
 
 <style scoped>
 .single-post-page {
