@@ -14,7 +14,7 @@ const createStore = () => {
                 state.loadedPosts.push(post)
             },
             editPost(state, editedPost) {
-                const postIndex = this.state.findIndex(post => post.id === editedPost.id)
+                const postIndex = this.state.loadedPosts.findIndex(post => post.id === editedPost.id)
                 state.loadedPosts[postIndex] = editedPost
             }
         },
