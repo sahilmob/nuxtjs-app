@@ -3,7 +3,7 @@
     <section class="intro">
       <h1>Get the latest tech news!</h1>
     </section>
-    <PostList />
+    <PostList :posts="loadedPosts" />
   </div>
 </template>
 
@@ -13,6 +13,26 @@ import PostList from "@/components/Posts/PostList";
 export default {
   components: {
     PostList
+  },
+  data() {
+    return {
+      loadedPosts: [
+        {
+          id: "1",
+          title: "First Post",
+          previewText: "This is our first post",
+          thumbnail:
+            "https://cdn.pixabay.com/photo/2015/09/17/17/25/code-944499_1280.jpg"
+        },
+        {
+          id: "2",
+          title: "Second Post",
+          previewText: "This is our second post",
+          thumbnail:
+            "https://cdn.pixabay.com/photo/2015/09/17/17/25/code-944499_1280.jpg"
+        }
+      ]
+    };
   }
 };
 </script>
