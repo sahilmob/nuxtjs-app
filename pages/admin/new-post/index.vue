@@ -16,17 +16,10 @@ export default {
   },
   methods: {
     onSubmitted(postData) {
-      axios
-        .post("https://nuxt-blog-ab0d8.firebaseio.com/posts.json", {
-          ...postData,
-          updateDate: new Date()
-        })
-        .then(res => {
-          console.log(res);
-        })
-        .catch(e => {
-          console.log(e);
-        });
+      // becaus we return the promise from addPost action, we could wait untill if finishes and use .then to any thing after it like forwarding user to admin page because router will not work inside ./store/index.js
+      this.$store
+        .dispatch("addPost", postData)
+        .then(() => this.$router.push("/admin"));
     }
   }
 };
