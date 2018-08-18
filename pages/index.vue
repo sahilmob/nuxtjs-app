@@ -14,9 +14,10 @@ export default {
   components: {
     PostList
   },
-  data() {
-    return {
-      loadedPosts: [
+  asyncData(context, callback){
+    setTimeout(()=>{
+      callback(null, {
+        loadedPosts: [
         {
           id: "1",
           title: "First Post",
@@ -32,7 +33,18 @@ export default {
             "https://cdn.pixabay.com/photo/2015/09/17/17/25/code-944499_1280.jpg"
         }
       ]
-    };
+      })
+    }, 1500)
+  },
+  // data() {
+  //   return {
+  //     loadedPosts: [
+
+  //     ]
+  //   };
+  // },
+  created(){
+
   }
 };
 </script>
