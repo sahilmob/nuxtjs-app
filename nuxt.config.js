@@ -86,6 +86,7 @@ module.exports = {
     mode: 'out-in'
   },
   env: {
-    baseURL: process.env.BASE_URL || 'https://nuxt-blog-ab0d8.firebaseio.com'
+    baseURL: process.env.BASE_URL || 'https://nuxt-blog-ab0d8.firebaseio.com',
+    fbAPIKey: 'AIzaSyC-ox0TzMhrkb8KVzAk8L28eHOD26XBANk'
   }
 }
