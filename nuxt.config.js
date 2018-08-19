@@ -42,7 +42,9 @@ module.exports = {
   /*
   ** Global CSS
   */
-  css: [],
+  css: [
+    '~assets/styles/main.css'
+  ],
 
   /*
   ** Plugins to load before mounting the App
@@ -67,8 +69,12 @@ module.exports = {
         config
           .module
           .rules
-          .push({enforce: 'pre', test: /\.(js|vue)$/, loader: 'eslint-loader', exclude: /(node_modules)/})
+          .push({ enforce: 'pre', test: /\.(js|vue)$/, loader: 'eslint-loader', exclude: /(node_modules)/ })
       }
     }
+  },
+  transitions: {
+    name: 'fade',
+    mode: 'out-in'
   }
 }
