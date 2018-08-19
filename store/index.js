@@ -22,7 +22,7 @@ const createStore = () => {
             }
         },
         actions: {
-            nuxtServerInit(vuexContect, context) {
+            nuxtServerInit(vuexContext, context) {
                 //In this methode we used context.app.$axios insted of this.$axios becuase it runs on the server
                 return context.app.$axios.$get('/posts.json')
                     .then(data => {
@@ -30,7 +30,7 @@ const createStore = () => {
                         for (const key in data) {
                             postsArray.push({ ...data[key], id: key })
                         }
-                        vuexContect.commit('setPosts', postsArray)
+                        vuexContext.commit('setPosts', postsArray)
                     })
                     .catch(e => context.error(e))
             },
@@ -43,7 +43,6 @@ const createStore = () => {
                         "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=" +
                         process.env.fbAPIKey;
                 }
-                console.log(authUrl);
                 return this.$axios
                     .post(authUrl, {
                         email: authData.email,
@@ -51,22 +50,24 @@ const createStore = () => {
                         returnSecureToken: true
                     })
                     .then(res => {
-                        vuexContext.commit('setToken', res.idToken)
+                        console.log(res);
+                        vuexContext.commit('setToken', res.data.idToken)
+                        console.log(res.data.idToken);
                     })
                     .catch(e => {
                         console.log(e);
                     });
             },
-            addPost(vuexContect, post) {
+            addPost(vuexContext, post) {
                 const createdPost = {
                     ...post,
                     updateDate: new Date()
                 }
                 // becaus we return the promise from addPost action, we could wait untill if finishes and use .then to any thing after it like forwarding user to admin page because router will not work inside ./store/index.js
                 return this.$axios
-                    .$post("/posts.json", createdPost)
+                    .$post("/posts.json?auth=" + vuexContext.state.token, createdPost)
                     .then(data => {
-                        vuexContect.commit('addPost', { ...createdPost, id: data.name })
+                        vuexContext.commit('addPost', { ...createdPost, id: data.name })
                     })
                     .catch(e => {
                         console.log(e);
@@ -79,7 +80,7 @@ const createStore = () => {
                         "/posts/" +
                         //post id is availabe because its sotred in the vuex store, because its and old post
                         post.id +
-                        ".json",
+                        ".json?auth=" + vuexContext.state.token,
                         post
                     ).then((res) => {
                         // console.log(res);
@@ -87,8 +88,8 @@ const createStore = () => {
                     })
                     .catch(e => console.log(e));
             },
-            setPosts(vuexContect, posts) {
-                vuexContect.commit('setPosts', posts)
+            setPosts(vuexContext, posts) {
+                vuexContext.commit('setPosts', posts)
             }
         },
         getters: {

@@ -1,7 +1,7 @@
 <template>
   <div class="admin-post-page">
     <section class="update-form">
-      <admin-post-form :post="loadedPost" @submit="onSubmitted"></admin-post-form>
+      <AdminPostForm :post="loadedPost" @submit="onSubmitted"></AdminPostForm>
     </section>
   </div>
 </template>
@@ -18,12 +18,9 @@ export default {
     return context.app.$axios
       .$get("/posts/" + context.params.postid + ".json")
       .then(data => {
-        console.log(res);
-        return {
-          loadedPost: { ...data, id: context.params.postid }
-        };
+        return { loadedPost: { ...data, id: context.params.postid } };
       })
-      .catch(e => context.error(r));
+      .catch(e => context.error(e));
   },
   methods: {
     onSubmitted(editedPost) {
