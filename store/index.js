@@ -84,7 +84,7 @@ const createStore = () => {
                     expirationDate = localStorage.getItem('tokenExpiration')
                 }
                 if (new Date().getTime() > +expirationDate || !token) {
-                    vuexContext.commit('clearToken')
+                    vuexContext.commit('logout')
                     return
                 }
                 //The + operator is to convert expirationDate to a number
@@ -124,6 +124,13 @@ const createStore = () => {
             },
             setPosts(vuexContext, posts) {
                 vuexContext.commit('setPosts', posts)
+            },
+            logout(vuexContext) {
+                vuexContext.commit('clearToken');
+                Cookie.remove('jwt');
+                Cookie.remove('expirationDate');
+                localStorage.removeItem('token');
+                localStorage.removeItem('tokenExpiration');
             }
         },
         getters: {
