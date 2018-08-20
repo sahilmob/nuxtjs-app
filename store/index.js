@@ -56,19 +56,14 @@ const createStore = () => {
                     .then(res => {
                         vuexContext.commit('setToken', res.data.idToken)
                         localStorage.setItem('token', res.data.idToken)
-                        localStorage.setItem('tokenExpiration', new Date().getTime() + res.data.expiresIn * 1000)
+                        //The + operator is to convert expirationDate to a number or userNumber.parseInt
+                        localStorage.setItem('tokenExpiration', new Date().getTime() + +res.data.expiresIn * 1000)
                         Cookie.set('jwt', res.data.idToken)
-                        Cookie.set('expirationDate', new Date().getTime() + res.data.expiresIn * 1000)
-                        vuexContext.dispatch('setLogoutTimer', res.data.expiresIn * 1000)
+                        Cookie.set('expirationDate', new Date().getTime() + Number.parseInt(res.data.expiresIn) * 1000)
                     })
                     .catch(e => {
                         console.log(e);
                     });
-            },
-            setLogoutTimer(vuexContext, duration) {
-                setTimeout(() => {
-                    vuexContext.commit('clearToken')
-                }, duration)
             },
             initAuth(vuexContext, req) {
                 let token;
@@ -94,7 +89,7 @@ const createStore = () => {
                 }
                 //The + operator is to convert expirationDate to a number
                 vuexContext.commit('setToken', token)
-                vuexContext.dispatch('setLogoutTimer', +expirationDate - new Date().getTime())
+
 
             },
             addPost(vuexContext, post) {
